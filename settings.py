@@ -2,7 +2,7 @@ from flask import Flask
 <<<<<<< HEAD
 
 global app
-app = FLask(__name__)
+app = Flask(__name__)
 =======
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy

@@ -22,8 +22,8 @@ CREATE TABLE Activity
 	priority INT NOT NULL,
 	is_subject BOOLEAN NOT NULL,
 	user_id INT NOT NULL REFERENCES User(user_id),
-    start_time TIME NOT NULL,
-    finish_time TIME NOT NULL,
+    start_time DATETIME NOT NULL,
+    finish_time DATETIME NOT NULL,
 	monday BOOLEAN NOT NULL,
 	tuesday BOOLEAN NOT NULL,
 	wednesday BOOLEAN NOT NULL,
@@ -82,3 +82,8 @@ CREATE TABLE Note
 	activity_id INT NOT NULL REFERENCES Activity(activity_id),
 	PRIMARY KEY(note_id)
 );
+
+
+-- DEBUGG VALUES
+
+INSERT INTO User VALUES (0, 'Gallardo', 'Emmanuel', 'Deg4_gow@hotmail.com', '4641004108', '1234', '2019-12-02 13:15:00', '2019-12-02 13:15:00'); 
