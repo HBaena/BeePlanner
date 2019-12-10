@@ -207,9 +207,13 @@ class Model:
                 Activity).filter(Activity.activity_id == activity_id).all()
 
     def read_note(self, username, activity_id, content):
-        self.__session.query(Note).filter(
+        return self.__session.query(Note).filter(
             Note.username == username & Note.activity_id == activity_id &
             Note.content == content).first()
+
+    def read_note_id(self, note_id):
+        return self.__session.query(Note).filter(
+            Note.note_id == note_id).first()
 
     def delete_note(self, note):
         self.__session.delete(note)

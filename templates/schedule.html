@@ -2,7 +2,10 @@
   <h2 class="white-text">Schedule</h2>
 </div>
 <div class="row">
-<div class="card-panel schedule z-depth-3">
+<div class="card-panel schedule z-depth-3" style="width: 95%">
+{% if activities != None %}
+  
+
     <div class="row s12">
         <div class="col s1" align="center"><h4></h4></div>
         {% for day in ('Mon', 'Tue', 'Wed', 'Thu', 'Fri') %}
@@ -55,4 +58,14 @@
 
   </div>
 </div>
+{% else %}
+  
+  <div class="row" align="center">
+  <h2>No activities</h2>    
+  <i class="material-icons large">layers_clear</i>
+  </div>
+
+{% endif %}
+
+
 </div>

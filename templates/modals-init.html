@@ -41,6 +41,18 @@
       var wednesday = $('#wednesday-hour').val() + ' ' + $('#wednesday-duration').val();
       var thursday = $('#thursday-hour').val() + ' ' + $('#thursday-duration').val();
       var friday = $('#friday-hour').val() + ' ' + $('#friday-duration').val();
+      if (title == '')
+      {
+        alert('Title is required');
+        return;
+      }
+      if ( $('#monday-hour').val() == null && $('#tuesday-hour').val() == null && $('#wednesday-hour').val() == null && $('#thursday-hour').val() == null && $('#friday-hour').val() == null) 
+      {
+        alert('At least a day is required'); 
+        return;
+      }
+      if (location == '') {location = 'No location'}
+      if (description == '') {description = 'No description'}
       var url = "{{ url_for('act') }}/" + description + "/" + 
                                         priority + "/" +
                                         location + "/" +
@@ -59,7 +71,15 @@
       var due_date = $('#due-date-note').val().replace('/','-');
       var activity = $('#activity-note').val();
       var priority = $("input[name='note-priority']:checked").val();
-
+      if (content == '')
+      {
+        alert('Content is required');
+        return;
+      }
+      if (due_date == '') 
+      {
+        due_date = 'None';
+      }
 
       var url = "{{ url_for('act') }}/".replace('activity', 'note') + 
                                         content + "/" + 
@@ -67,5 +87,25 @@
                                         due_date + "/" +
                                         activity;
       window.location.replace(url);          
+    }
+
+    function deleteActivity(title) {
+      var r = confirm('Do you want to delete "'+title+'"?');
+      if (r == true) {
+        // window.location.replace("{{url_for('act')}}".replace('activity','note/remove/') + title);
+        window.location.replace("{{url_for('act')}}"+ "/remove/" + title);
+      }
+      return;
+    }
+    
+    function deleteNote(note_id) {
+      var r = confirm('Do you want to delete this note?');
+      if (r == true) {
+        window.location.replace("{{url_for('act')}}".replace('activity','note/remove/') + note_id);
+        // window.location.replace("{{url_for('act')}}"+ "/remove/" + title);
+        // alert(note_id);
+      }
+      return;
+      // body...
     }
   </script>

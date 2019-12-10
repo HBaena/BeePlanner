@@ -24,11 +24,12 @@ def define_notes():
             else:
                 activities.append('None')
 
+        # return None
         return zip(response,
                    [get_random_color() for _ in range(len(response))],
                    activities)
     else:
-        return None, None
+        return None
 
 
 def define_schedule():
@@ -91,6 +92,7 @@ def get_random_color():
 
 def render_this_page(url, title, **kwargs):
     kwargs = {**logged_args(), **kwargs}
+    print(kwargs)
     return render_template(url, title=title, **kwargs)
 
 
@@ -241,6 +243,16 @@ def remove_activity(title):
     return render_template('404.html'), 404
 
 
+@app.route('/note/remove/<int:id>')
+def remove_note(id):
+    if 'username' in session:
+        if controller.remove_note(id) == InfoCodes.SUCCESS:
+            controller.save()
+            return redirect(url_for('home'))
+
+    return render_template('404.html'), 404
+
+
 @app.route('/note/<string:content>/<string:priority>/<string:due_date>/<string:title>')
 def note(content=None, priority=None, due_date=None, title=None):
     if 'username' in session:
@@ -249,7 +261,7 @@ def note(content=None, priority=None, due_date=None, title=None):
         if content == 'undefined':
             return render_template('404.html'), 404
 
-        if 'null' not in due_date:
+        if 'None' not in due_date:
             due_date = datetime.strptime(due_date, '%d-%m-%Y').date()
         else:
             due_date = None
@@ -266,7 +278,7 @@ def note(content=None, priority=None, due_date=None, title=None):
 
 @app.route('/about')
 def about():
-    pass
+    return render_this_page('about.html', 'about us')
 
 
 @app.errorhandler(404)

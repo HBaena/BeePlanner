@@ -107,8 +107,8 @@ class Controller:
             activity_id = self.model.read_activity(title=title).activity_id
             return self.model.read_notes(activity_id=activity_id)
 
-    def remove_notes(self, username, title, content):
-        note = self.model.read_note(username, title, content)
+    def remove_note(self, note_id):
+        note = self.model.read_note_id(note_id)
         if note:
             self.model.delete_note(note)
             return InfoCodes.SUCCESS

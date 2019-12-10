@@ -5,7 +5,6 @@
             <i class="material-icons large"> {{ icon_header }}</i> 
         </div>
         <div class="col s10">
-            
             <h5>{{ title_header }}</h5>
         </div>
     </div>
@@ -21,10 +20,13 @@
             <div class="col s2">{{ note.creation_date.strftime('%m-%d-%y') }}</div>
             <div class="col s3"><strong>Due date: </strong></div>
             {% if note.due_date == None or note.due_date == 'NULL' %}
-            <div class="col s4">Never</div>
+            <div class="col s2">Never</div>
             {% else %}
-            <div class="col s4">{{ note.due_date.strftime('%m-%d-%y') }}</div>
+            <div class="col s2">{{ note.due_date.strftime('%m-%d-%y') }}</div>
             {% endif %}
+            <div class="col s2">
+              <a onclick="deleteNote('{{ note.note_id }}')" class="btn-floating red"><i class="material-icons">delete</i></a>
+            </div>
         </div>
 
     </div>
