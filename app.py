@@ -1,7 +1,7 @@
 from flask import render_template, session, redirect, url_for, request
 from settings import app, db
-# from random import choice
-from numpy.random import randint
+from random import choice
+# from numpy.random import randint
 from controller import Controller
 from model import InfoCodes, MODAL_COLORS, Priorities
 from datetime import datetime
@@ -87,7 +87,7 @@ def define_schedule():
 
 
 def get_random_color():
-    return MODAL_COLORS[randint(0, len(MODAL_COLORS))]
+    return choice(MODAL_COLORS)
 
 
 def render_this_page(url, title, **kwargs):
