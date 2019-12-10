@@ -1,6 +1,7 @@
 from flask import render_template, session, redirect, url_for, request
 from settings import app, db
-from random import choice
+# from random import choice
+from numpy.random import randint
 from controller import Controller
 from model import InfoCodes, MODAL_COLORS, Priorities
 from datetime import datetime
@@ -25,17 +26,18 @@ def define_notes():
                 activities.append('None')
 
         return zip(response,
-            [get_random_color() for _ in range(len(response))],
-            activities)
+                   [get_random_color() for _ in range(len(response))],
+                   activities)
     else:
         return None
 
+
 def get_random_color():
-    return choice(MODAL_COLORS)
+    return MODAL_COLORS[randint(0, len(MODAL_COLORS))]
 
 
 def render_this_page(url, title, **kwargs):
-    kwargs = { **logged_args() ,**kwargs }
+    kwargs = {**logged_args(), **kwargs}
     return render_template(url, title=title, **kwargs)
 
 
@@ -67,23 +69,25 @@ def test():
     # return render_template('home.html')
     return render_this_page('404.html', '404')
 
+
 @app.route('/')
 @app.route('/index')
 def index():
     return render_this_page('index.html', 'BeePlanner')
 
 # @app.route('/')
+
+
 @app.route('/home')
 # @logged_args
 def home():
-    print(controller.get_activity_name(1))
     notes = None
     if 'username' in session:
-        notes= define_notes()
-        return render_this_page('home.html', 'HOME', notes=notes)
+        activities = controller.get_activities(session['username'])
+        notes = define_notes()
+        return render_this_page('home.html', 'HOME', notes=notes, activities=activities)
     else:
         return redirect(url_for('index'))
-        
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -143,6 +147,11 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/activity')
+def act():
+    return render_template('404.html'), 404
+
+
 @app.route(('/activity/<string:description>/'
             '<string:priority>/<string:location>/'
             '<string:title>/<string:monday>/'
@@ -154,8 +163,8 @@ def activity(description, priority=None, location=None,
     print(description, priority, location, title)
     print(monday, tuesday, wednesday, thursday, friday)
     monday, tuesday, wednesday, thursday, friday = map(
-        lambda s: '' if s == 'None' else s, [monday, tuesday,
-                                             wednesday, thursday, 
+        lambda s: '' if 'null' in s else s, [monday, tuesday,
+                                             wednesday, thursday,
                                              friday])
     if 'username' in session:
         response = controller.add_activity(session['username'], description,
@@ -180,13 +189,16 @@ def remove_activity(title):
 
     return render_template('404.html'), 404
 
-
 @app.route('/note/<string:content>/<string:priority>/<string:due_date>/<string:title>')
 def note(content=None, priority=None, due_date=None, title=None):
     if 'username' in session:
         creation_date = datetime.today()
         username = session['username']
-        if due_date != 'None':
+        print('HELLO')
+        if content == 'undefined':
+            return render_template('404.html'), 404
+
+        if 'null' not in due_date:
             due_date = datetime.strptime(due_date, '%d-%m-%Y').date()
         else:
             due_date = None
@@ -194,11 +206,13 @@ def note(content=None, priority=None, due_date=None, title=None):
             activity_id = controller.get_activity_id(title)
         else:
             activity_id = 0
-        controller.add_note(content, priority, due_date, creation_date, username, activity_id)
+        controller.add_note(content, priority, due_date,
+                            creation_date, username, activity_id)
         controller.save()
         return redirect(url_for('home'))
 
     return render_template('404.html'), 404
+
 
 @app.errorhandler(404)
 def error_404(e):

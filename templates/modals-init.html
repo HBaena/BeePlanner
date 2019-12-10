@@ -2,6 +2,7 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script> -->
   
   <script>
+  var currYear = (new Date()).getFullYear();
   $(document).ready(function(){
   $('select').formSelect();
     $('.tooltipped').tooltip();
@@ -11,6 +12,14 @@
         dismissible: false, // Modal cannot be closed by clicking anywhere outside
    
       });
+    $(".datepicker").datepicker({
+      defaultDate: (new Date()),
+      // setDefaultDate: new Date(2000,01,31),
+      maxDate: new Date(currYear+2,12,31),
+      yearRange: [1928, currYear],
+      format: "dd-mm-yyyy", 
+      container: 'body'
+    });
 
   });
     autoplay()   
@@ -20,5 +29,44 @@
     }
     function openModalOwn(id_modal) {
         $('#'+id_modal).modal('open');
+    }
+    function done_activity()
+    {
+      var title = $('#activity-title').val();
+      var description = $('#activity-description').val();
+      var location = $('#activity-location').val();
+      var priority = $("input[name='activity-priority']:checked").val();
+      var monday = $('#monday-hour').val() + ' ' + $('#monday-duration').val();
+      var tuesday = $('#tuesday-hour').val() + ' ' + $('#tuesday-duration').val();
+      var wednesday = $('#wednesday-hour').val() + ' ' + $('#wednesday-duration').val();
+      var thursday = $('#thursday-hour').val() + ' ' + $('#thursday-duration').val();
+      var friday = $('#friday-hour').val() + ' ' + $('#friday-duration').val();
+      var url = "{{ url_for('act') }}/" + description + "/" + 
+                                        priority + "/" +
+                                        location + "/" +
+                                        title + "/" +
+                                        monday + "/" +
+                                        tuesday + "/" +
+                                        wednesday + "/" +
+                                        thursday + "/" +
+                                        friday + "/";
+      window.location.replace(url);    
+    }
+    function done_Reminder()
+    {
+
+      var content = $('#note-content').val();
+      var due_date = $('#due-date-note').val().replace('/','-');
+      var activity = $('#activity-note').val();
+      var priority = $("input[name='note-priority']:checked").val();
+
+
+      var url = "{{ url_for('act') }}/".replace('activity', 'note') + 
+                                        content + "/" + 
+                                        priority + "/" +
+                                        due_date + "/" +
+                                        activity;
+      alert(url);
+      window.location.replace(url);          
     }
   </script>

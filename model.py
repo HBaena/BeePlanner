@@ -1,16 +1,45 @@
 from settings import db
 
 MODAL_COLORS = (
-    'amber darken-4', 
-    'orange accent-4', 
-    'yellow accent-2', 
-    'cyan', 
-    'teal darken-1', 
-    'red accent-2', 
-    'light-blue darken-4', 
-    'purple accent-2', 
-    'light-green accent-3', 
-    'deep-orange accent-1', 
+    'orange lighten-1',
+    ' red lighten-2 ',
+    'red accent-2 ',
+    ' purple lighten-2',
+    ' purple accent-1 ',
+    ' deep-purple accent-1 ',
+    'indigo lighten-1 ',
+    ' blue lighten-4 ',
+    ' light-blue accent-1 ',
+    'cyan darken-2 ',
+    ' cyan darken-1',
+    ' teal lighten-1',
+    ' green darken-3',
+    'teal accent-3 ',
+    ' lime',
+    'lime accent-1 ',
+    ' amber',
+    'light-green darken-4',
+    'yellow',
+    ' pink darken-3',
+    ' amber accent-3',
+    'pink darken-1 ',
+    ' orange darken-4',
+    ' blue-grey darken-1',
+    'brown lighten-2',
+    ' orange lighten-1',
+    '  light-green accent-4',
+    'teal',
+    'red darken-4',
+    ' red lighten-3',   'amber darken-4',
+    'orange accent-4',
+    'yellow accent-2',
+    'cyan',
+    'teal darken-1',
+    'red accent-2',
+    'light-blue darken-4',
+    'purple accent-2',
+    'light-green accent-3',
+    'deep-orange accent-1',
 
 )
 
@@ -202,9 +231,9 @@ class User(db.Model):
         'Activity', backref='User', cascade="all, delete-orphan")
 
     def __repr__(self):
-        return '{},{},{},{},{}'.format(self.username, 
-                    self.password, self.email, 
-                    self.name, self.lastname)
+        return '{},{},{},{},{}'.format(self.username,
+                                       self.password, self.email,
+                                       self.name, self.lastname)
 
 
 class Activity(db.Model):
