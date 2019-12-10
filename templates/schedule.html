@@ -1,5 +1,5 @@
 <div class="row s12" align="center">
-  <h2>Schedule</h2>
+  <h2 class="white-text">Schedule</h2>
 </div>
 <div class="row">
 <div class="card-panel schedule z-depth-3">
@@ -13,7 +13,7 @@
     </div>
     <div class="row">
       <div class="col s1">
-        {% for i in range(0, 24, 1) %}
+        {% for i in range(init, end, 1) %}
         <div class="hours" align="left">{{i}}:00</div>
         {% endfor %}
       </div>
@@ -25,40 +25,29 @@
                 {% include 'activity-pop-up.html'%}
             {% endwith%} 
 #}
-<div class="col s2">
-  {% for i in range(0, 24, 1) %}
-    <div class="calendar__day"></div>
+{% for dday in ('monday', 'tuesday', 'wednesday', 'thursday') %}
+  <div class="col s2">
+  {% for day in days[dday][init:end] %}
+    <div class="calendar__day">
+    {% if day %}
+    <a class="modal-trigger black-text {{ day[2] }} activity-trigger" href="#modal-activity-{{ day[0] }}"> {{ day[1][:8] }} ... </a>         
+    {% endif %}
+    </div>
+
   {% endfor %}
 
-</div>
+  </div>
+{% endfor %}
+
 <div class="col s2">
-  {% for i in range(0, 24, 1) %}
-    <div class="calendar__day">
-        {% for day in days['monday'] %}
-          {% if expr %}
-            
-          {% endif %}
-        {% endfor %}
+  {% for day in days['friday'][init:end] %}
+    <div class="calendar__day friday">
+    {% if day %}
+    <a class="modal-trigger black-text {{ day[2] }} activity-trigger" href="#modal-activity-{{ day[0] }}"> {{ day[1][:8] }} ... </a>         
+    {% endif %}
     </div>
   {% endfor %}
 
-</div>
-<div class="col s2">
-  {% for i in range(0, 24, 1) %}
-    <div class="calendar__day"></div>
-  {% endfor %}
-
-</div>
-<div class="col s2">
-  {% for i in range(0, 24, 1) %}
-    <div class="calendar__day"></div>
-  {% endfor %}
-
-</div>
-<div class="col s2">
-  {% for i in range(0, 24, 1) %}
-    <div class="calendar__day friday"></div>
-  {% endfor %}
 
 </div>
 

@@ -4,14 +4,10 @@
 <div class="row home-page">
     <div class="col s4">
         <div class="row s12" align="center">
-          <h2>Reminders</h2>
+          <h2 class="white-text">Reminders</h2>
         </div>
         <div class="row s12">
-
-
-  
-
-            {% if notes != None %}
+            {% if notes != None and notes != 0%}
             <ul class="collapsible popout reminder transparent">
                 {% for note, color, activity in notes %}
                     {% set icon='child_care' %}
@@ -50,6 +46,14 @@
       <li><a class="btn-floating amber darken-3 tooltipped" href="#activity-form" data-position="top" data-tooltip="Activity"><i class="material-icons">school</i></a></li>
     </ul>
   </div>
+{% if notes != None %}
+{% for activity in activities %}
+    {% with modal_id='modal-activity-{}'.format(activity.activity_id), modal_title=activity.title%}
+        {% include "pop-up.html" %}
+    {% endwith %}
+    
+{% endfor %}
+{% endif %}
 {% include "activity-form.html" %}
 {% include "note-form.html" %}
 {% include "modals-init.html" %}

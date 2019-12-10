@@ -34,11 +34,11 @@ def define_notes():
 def define_schedule():
     activities = controller.get_activities(session['username'])
     days = {
-        'monday': list(range(24)),
-        'tuesday': list(range(24)),
-        'wednesday': list(range(24)),
-        'thursday': list(range(24)),
-        'friday': list(range(24)),
+        'monday': [0]*24,
+        'tuesday': [0]*24,
+        'wednesday': [0]*24,
+        'thursday': [0]*24,
+        'friday': [0]*24,
     }
     if activities:
         schedule = []
@@ -46,21 +46,43 @@ def define_schedule():
             response = controller.get_schedule(activity.activity_id)
             if response:
                 schedule.extend(response)
-        for sch in schedule:
-            if sch.monday:
-                days['monday'].append(sch)
-            elif sch.tuesday:
-                days['tuesday'].append(sch)
-            elif sch.wednesday:
-                days['wednesday'].append(sch)
-            elif sch.thursday:
-                days['thursday'].append(sch)
-            elif sch.friday:
-                days['friday'].append(sch)
 
-        return activities, days
+        for sch in schedule:
+            for day in days.keys():
+                if getattr(sch, day):
+                    hour, duration = map(int, getattr(
+                        sch, day).replace(':00', '').split())
+                    title = controller.get_activity_name(
+                        activity_id=sch.activity_id)
+                    idx = sch.activity_id if sch.activity_id < len(
+                        MODAL_COLORS) else int(sch.activity_id/len(MODAL_COLORS))
+                    for i in range(duration):
+                        days[day][hour+i] = (sch.activity_id,
+                                             title, MODAL_COLORS[idx])
+        init = 12
+        end = 20
+        for i in range(12):
+            if  any((
+                    days['monday'][i],
+                    days['tuesday'][i],
+                    days['wednesday'][i],
+                    days['thursday'][i],
+                    days['friday'][i])):
+                init = i
+                break
+        for i in range(23, 12, -1):
+            if  any((
+                    days['monday'][i],
+                    days['tuesday'][i],
+                    days['wednesday'][i],
+                    days['thursday'][i],
+                    days['friday'][i])):
+                end = i
+                break
+
+        return activities, days, init, end
     else:
-        return None
+        return None, None, None, None
 
 
 def get_random_color():
@@ -114,9 +136,11 @@ def index():
 def home():
     notes = None
     if 'username' in session:
-        activities, days = define_schedule()
+        activities, days, init, end = define_schedule()
         notes = define_notes()
-        return render_this_page('home.html', 'HOME', notes=notes, activities=activities, days=days)
+        return render_this_page('home.html', 'HOME', notes=notes,
+                                activities=activities,
+                                days=days, init=init, end=end)
     else:
         return redirect(url_for('index'))
 
@@ -239,6 +263,10 @@ def note(content=None, priority=None, due_date=None, title=None):
         return redirect(url_for('home'))
 
     return render_template('404.html'), 404
+
+@app.route('/about')
+def about():
+    pass
 
 
 @app.errorhandler(404)
