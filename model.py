@@ -215,7 +215,6 @@ class Model:
     def delete_note(self, note):
         self.__session.delete(note)
 
-
 class User(db.Model):
     """docstring for User"""
 
@@ -284,3 +283,12 @@ class Schedule(db.Model):
     friday = db.Column(db.String(25), nullable=True)
     activity_id = db.Column(db.Integer, db.ForeignKey(
         'Activity.activity_id'), nullable=False)
+
+    def __repr__(self):
+        return '{}, {}, {}, {}, {}|'.format(
+            self.monday,
+            self.tuesday,
+            self.wednesday,
+            self.thursday,
+            self.friday
+            )

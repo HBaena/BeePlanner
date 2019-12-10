@@ -19,7 +19,6 @@ def define_notes():
         activities = []
         for i in range(len(response)):
             r = controller.get_activity_name(response[i].activity_id)
-            print(r)
             if r:
                 activities.append(r)
             else:
@@ -28,6 +27,38 @@ def define_notes():
         return zip(response,
                    [get_random_color() for _ in range(len(response))],
                    activities)
+    else:
+        return None, None
+
+
+def define_schedule():
+    activities = controller.get_activities(session['username'])
+    days = {
+        'monday': list(range(24)),
+        'tuesday': list(range(24)),
+        'wednesday': list(range(24)),
+        'thursday': list(range(24)),
+        'friday': list(range(24)),
+    }
+    if activities:
+        schedule = []
+        for activity in activities:
+            response = controller.get_schedule(activity.activity_id)
+            if response:
+                schedule.extend(response)
+        for sch in schedule:
+            if sch.monday:
+                days['monday'].append(sch)
+            elif sch.tuesday:
+                days['tuesday'].append(sch)
+            elif sch.wednesday:
+                days['wednesday'].append(sch)
+            elif sch.thursday:
+                days['thursday'].append(sch)
+            elif sch.friday:
+                days['friday'].append(sch)
+
+        return activities, days
     else:
         return None
 
@@ -83,9 +114,9 @@ def index():
 def home():
     notes = None
     if 'username' in session:
-        activities = controller.get_activities(session['username'])
+        activities, days = define_schedule()
         notes = define_notes()
-        return render_this_page('home.html', 'HOME', notes=notes, activities=activities)
+        return render_this_page('home.html', 'HOME', notes=notes, activities=activities, days=days)
     else:
         return redirect(url_for('index'))
 
@@ -113,7 +144,6 @@ def login():
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if 'username' in session or request.method == 'GET':
-        print('Entra 2')
         return render_this_page('register.html', 'REGISTER')
     elif request.method == 'POST':
         username = request.form['username']
@@ -132,7 +162,6 @@ def register():
             else:
                 controller.save()
                 return redirect(url_for('home'))
-    print('WTH')
     return render_this_page('register.html', 'REGISTER')
 
 
@@ -160,8 +189,6 @@ def act():
 def activity(description, priority=None, location=None,
              title=None, monday=None, tuesday=None,
              wednesday=None, thursday=None, friday=None):
-    print(description, priority, location, title)
-    print(monday, tuesday, wednesday, thursday, friday)
     monday, tuesday, wednesday, thursday, friday = map(
         lambda s: '' if 'null' in s else s, [monday, tuesday,
                                              wednesday, thursday,
@@ -189,12 +216,12 @@ def remove_activity(title):
 
     return render_template('404.html'), 404
 
+
 @app.route('/note/<string:content>/<string:priority>/<string:due_date>/<string:title>')
 def note(content=None, priority=None, due_date=None, title=None):
     if 'username' in session:
         creation_date = datetime.today()
         username = session['username']
-        print('HELLO')
         if content == 'undefined':
             return render_template('404.html'), 404
 

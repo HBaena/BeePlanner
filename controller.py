@@ -59,10 +59,18 @@ class Controller:
                                     priority, location, username)
         return self.get_activity_id(title)
 
+    def get_schedule(self, activity_id):
+        schedule =self.model.read_schedule(activity_id)
+        if schedule:
+            return schedule
+        else:
+            return InfoCodes.ERROR            
+
     def add_schedule(self, monday, tuesday, wednesday, thursday,
                      friday, activity_id):
         self.model.create_schedule(monday, tuesday, wednesday,
                                    thursday, friday, activity_id)
+
 
     def get_activities(self, username):
         activities = self.model.read_activities(username)

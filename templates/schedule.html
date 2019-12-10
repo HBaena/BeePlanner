@@ -5,171 +5,65 @@
 <div class="card-panel schedule z-depth-3">
     <div class="row s12">
         <div class="col s1" align="center"><h4></h4></div>
-        <div class="col s2" align="center"><h4>Mon</h4></div>
-        <div class="col s2" align="center"><h4>Tue</h4></div>
-        <div class="col s2" align="center"><h4>Wed</h4></div>
-        <div class="col s2" align="center"><h4>Thu</h4></div>
-        <div class="col s2" align="center"><h4>Fri</h4></div>
+        {% for day in ('Mon', 'Tue', 'Wed', 'Thu', 'Fri') %}
+          <div class="col s2" align="center"><h4>{{ day }}</h4></div>
+        {% endfor %}
         <div class="col s1" align="center"><h4></h4></div>
 
     </div>
     <div class="row">
       <div class="col s1">
-        <div class="hours" align="left">04:00</div>
-        <div class="hours" align="left">05:00</div>
-        <div class="hours" align="left">06:00</div>
-        <div class="hours" align="left">07:00</div>
-        <div class="hours" align="left">08:00</div>
-        <div class="hours" align="left">09:00</div>
-        <div class="hours" align="left">10:00</div>
-        <div class="hours" align="left">11:00</div>
-        <div class="hours" align="left">12:00</div>
-        <div class="hours" align="left">13:00</div>
-        <div class="hours" align="left">14:00</div>
-        <div class="hours" align="left">15:00</div>
-        <div class="hours" align="left">16:00</div>
-        <div class="hours" align="left">17:00</div>
-        <div class="hours" align="left">18:00</div>
-        <div class="hours" align="left">19:00</div>
-        <div class="hours" align="left">20:00</div>
-        <div class="hours" align="left">21:00</div>
-        <div class="hours" align="left">22:00</div>
-        <div class="hours" align="left">23:00</div>
-        <div class="hours" align="left">00:00</div>
+        {% for i in range(0, 24, 1) %}
+        <div class="hours" align="left">{{i}}:00</div>
+        {% endfor %}
       </div>
 
-      <div class="row s2" name='monday'>
-        <div class="col s2">
-          <div class="calendar__day">
+{#             
             {% with  color='lime lighten-1', modal_id='modal-1', trigger='trigger',
                             modal_title='Calculus', content='Hello world', activity=None%}
 
                 {% include 'activity-pop-up.html'%}
-            {% endwith%}
+            {% endwith%} 
+#}
+<div class="col s2">
+  {% for i in range(0, 24, 1) %}
+    <div class="calendar__day"></div>
+  {% endfor %}
 
-          </div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-        </div>
-      <div class="row s2" name='monday'>
-        <div class="col s2">
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-        </div>
-      <div class="row s2" name='monday'>
-        <div class="col s2">
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-        </div>
-      <div class="row s2" name='monday'>
-        <div class="col s2">
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-          <div class="calendar__day">Hello</div>
-        </div>
-      <div class="row s2" class=''>
-        <div class="col s2">
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-          <div class="calendar__day friday">Hello</div>
-        </div>
-      </div>
-
-
+</div>
+<div class="col s2">
+  {% for i in range(0, 24, 1) %}
+    <div class="calendar__day">
+        {% for day in days['monday'] %}
+          {% if expr %}
+            
+          {% endif %}
+        {% endfor %}
     </div>
+  {% endfor %}
+
+</div>
+<div class="col s2">
+  {% for i in range(0, 24, 1) %}
+    <div class="calendar__day"></div>
+  {% endfor %}
+
+</div>
+<div class="col s2">
+  {% for i in range(0, 24, 1) %}
+    <div class="calendar__day"></div>
+  {% endfor %}
+
+</div>
+<div class="col s2">
+  {% for i in range(0, 24, 1) %}
+    <div class="calendar__day friday"></div>
+  {% endfor %}
 
 </div>
 
+
+
+  </div>
+</div>
 </div>
