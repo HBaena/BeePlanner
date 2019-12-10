@@ -1,8 +1,8 @@
   <div class="nav-fixed">
 	<nav class="nav">
       <div class="nav-wrapper container">  
-        <img href="index" style="height: 65%;margin-top:10px;margin-right: 10px;" class="responsive-img" src="{{ url_for('static', filename='img/bee.png') }}">
-        <a href="index" class="brand-logo left">
+        <img href="{{url_for('index')}}" style="height: 65%;margin-top:10px;margin-right: 10px;" class="responsive-img" src="{{ url_for('static', filename='img/bee.png') }}">
+        <a href="{{url_for('index')}}" class="brand-logo left">
         BeePlanner
         </a>
         <ul class="right">
