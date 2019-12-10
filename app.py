@@ -92,7 +92,6 @@ def get_random_color():
 
 def render_this_page(url, title, **kwargs):
     kwargs = {**logged_args(), **kwargs}
-    print(kwargs)
     return render_template(url, title=title, **kwargs)
 
 
