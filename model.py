@@ -247,7 +247,7 @@ class Activity(db.Model):
     title = db.Column(db.String(30), nullable=False)
     priority = db.Column(db.Integer, nullable=False)
     location = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.Integer, db.ForeignKey(
+    username = db.Column(db.String(30), db.ForeignKey(
         'User.username'), nullable=False)
     # db.relationship must      be in the parent table
     note = db.relationship('Note', backref='Activity',
@@ -268,7 +268,7 @@ class Note(db.Model):
     priority = db.Column(db.String(30), nullable=False, )
     due_date = db.Column(db.DateTime, nullable=True)
     creation_date = db.Column(db.DateTime, nullable=False)
-    username = db.Column(db.Integer, db.ForeignKey(
+    username = db.Column(db.String(30), db.ForeignKey(
         'User.username'), nullable=False)
     activity_id = db.Column(db.Integer, db.ForeignKey(
         'Activity.activity_id'), nullable=False)
