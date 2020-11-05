@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os.path import abspath
 from os import getcwd
 
-db_name = 'Cinema.db'
+db_name = 'beeplanner.db'
 app = Flask(__name__)
 uri = 'sqlite:///{}/{}'.format(abspath(getcwd()), db_name)
 # uri = f'sqlite:///{abspath(getcwd())}/{db_name}'

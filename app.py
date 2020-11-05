@@ -127,6 +127,7 @@ def test():
 @app.route('/')
 @app.route('/index')
 def index():
+    print(controller.get_all_users())
     return render_this_page('index.html', 'BeePlanner')
 
 # @app.route('/')
@@ -172,20 +173,23 @@ def register():
         return render_this_page('register.html', 'REGISTER')
     elif request.method == 'POST':
         username = request.form['username']
-        name = request.form['name']
-        lastname = request.form['lastname']
-        phone = request.form['phone']
+        # name = request.form['name']
+        # lastname = request.form['lastname']
+        # phone = request.form['phone']
         email = request.form['email']
         password = request.form['password']
-        if not all([username, name, lastname, phone, email, password]):
+        if not all([username, 
+            # name, lastname, phone, 
+            email, password]):
             return render_this_page('register.html', 'REGISTER')
         else:
             response = controller.add_user(username, email, password,
-                                           name, lastname, phone)
+                                           '', '', '')
             if response == InfoCodes.USER_ALREADY_EXIST:
                 return render_this_page('register.html', 'REGISTER')
             else:
                 controller.save()
+                session['username'] = controller.get_username(email)
                 return redirect(url_for('home'))
     return render_this_page('register.html', 'REGISTER')
 
@@ -287,4 +291,5 @@ def error_404(e):
 
 if __name__ == '__main__':
     db.create_all()
-    app.run(threaded=True, port=5000)
+    app.run(threaded=True, port=5000, debug=True)
+    # db.close()
